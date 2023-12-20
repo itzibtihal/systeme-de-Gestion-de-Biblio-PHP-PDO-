@@ -1,15 +1,13 @@
 <?php
 
-namespace Book;
-
-use App\database\DbConfig;
-
-use dao\DaoInterface;
-use Connection;
-use models\Book;
-use models\User;
-
+namespace App\controllers;
 require_once __DIR__ . '/../../../vendor/autoload.php';
+
+use App\dao\DaoInterface;
+use App\database\DbConfig;
+use App\models\Book;
+use Exception;
+
 class BookController implements DaoInterface
 {
 
@@ -49,24 +47,75 @@ class BookController implements DaoInterface
 
     }
 
-    public function update($book)
+    public function update($Book)
     {
-        
+        try {
+            $sql = "UPDATE `book` SET `title`=:title, `author`=:author, `genre`=:genre, `description`=:description, `publication_year`=:publication_year, `total_copies`=:total_copies, `available_copies`=:available_copies WHERE id = :id";
+            $statement = $this->dbConnection->prepare($sql);
+
+            $id = $Book->getId();
+            $title = $Book->getTitle();
+            $author = $Book->getAuthor();
+            $genre = $Book->getGenre();
+            $description = $Book->getDescription();
+            $publication_year = $Book->getPublicationYear();
+            $total_copies = $Book->getTotalCopies();
+            $available_copies = $Book->getAvailableCopies();
+
+            $statement->bindParam(':id', $id);
+            $statement->bindParam(':title', $title);
+            $statement->bindParam(':author', $author);
+            $statement->bindParam(':genre', $genre);
+            $statement->bindParam(':description', $description);
+            $statement->bindParam(':publication_year', $publication_year);
+            $statement->bindParam(':total_copies', $total_copies);
+            $statement->bindParam(':available_copies', $available_copies);
+            $statement->execute();
+            return true;
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage());
+        }
     }
 
     public function findById($id)
     {
-       
+        try {
+            $sql = "SELECT * FROM `book` WHERE id = :id";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function findAll()
     {
-        
+        try {
+            $sql = "SELECT * FROM `book`";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->execute();
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+            return [];
+        }
     }
 
     public function deleteById($id)
     {
-        
+        try{
+            $sql = "DELETE  FROM `book` WHERE id = :id";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+
+        }catch(\PDOException $e){
+            echo $e->getMessage();
+        }
     }
 
 }

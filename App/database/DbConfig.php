@@ -52,11 +52,11 @@ class DbConfig
 }
 
 
-$connection = new DbConfig();
-$conn = $connection->getConnection();
+// $connection = new DbConfig();
+// $conn = $connection->getConnection();
 
-if ($connection->isConnected()) {
-    echo "Database connected successfully!";
-} else {
-    echo "Failed to connect to the database.";
-}
+// if ($connection->isConnected()) {
+//     echo "Database connected successfully!";
+// } else {
+//     echo "Failed to connect to the database.";
+// }
