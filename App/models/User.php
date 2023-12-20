@@ -1,24 +1,23 @@
 <?php
 
-namespace models;
+namespace App\models;
 
-use Connection;
 
 
 class User{
 
-    private $name;
-    private $lastname;
+    private $fullname;
+    private $last_name;
     private $email;
     private $password;
     private $phone;
     private $budget;
 
     
-    public function __construct($name, $lastname, $email, $password, $phone, $budget)
+    public function __construct($fullname, $last_name, $email, $password, $phone, $budget)
     {
-        $this->name = $name;
-        $this->lastname = $lastname;
+        $this->fullname = $fullname;
+        $this->last_name = $last_name;
         $this->email = $email;
         $this->password = $password;
         $this->phone = $phone;
@@ -30,25 +29,25 @@ class User{
    
     public function getName()
     {
-        return $this->name;
+        return $this->fullname;
     }
 
-   
-    public function setName($name)
+  
+    public function setName($fullname)
     {
-        $this->name = $name;
-    }
-
-   
-    public function getLastname()
-    {
-        return $this->lastname;
+        $this->fullname = $fullname;
     }
 
     
-    public function setLastname($lastname)
+    public function getLastname()
     {
-        $this->lastname = $lastname;
+        return $this->last_name;
+    }
+
+   
+    public function setLastname($last_name)
+    {
+        $this->last_name = $last_name;
     }
 
    
@@ -57,43 +56,42 @@ class User{
         return $this->email;
     }
 
-    
+  
     public function setEmail($email)
     {
         $this->email = $email;
     }
 
-   
+    
     public function getPassword()
     {
         return $this->password;
     }
 
-   
     public function setPassword($password)
     {
         $this->password = $password;
     }
 
-    
+   
     public function getPhone()
     {
         return $this->phone;
     }
 
-    
+  
     public function setPhone($phone)
     {
         $this->phone = $phone;
     }
 
-   
+    
     public function getBudget()
     {
         return $this->budget;
     }
 
-    
+   
     public function setBudget($budget)
     {
         $this->budget = $budget;
