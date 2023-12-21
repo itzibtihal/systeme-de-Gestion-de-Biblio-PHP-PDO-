@@ -45,7 +45,7 @@ $books = $bookController->findAll();
             <td><?= $book["available_copies"]; ?></td>
             <td>
                 <a href="delete.php?id=<?= $book["id"] ?>">delete</a>
-                <a href="edit.php?id=<?= $book["id"] ?>">edit</a>
+                <a href="update.php?id=<?= $book["id"] ?>">edit</a>
             </td>
         </tr>
     <?php endforeach; ?>

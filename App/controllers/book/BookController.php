@@ -129,7 +129,7 @@ class BookController implements DaoInterface
 
 
 if(isset($_POST['submit'])) {
-    $user = new Book(null,null,null,null,null,null,null);
+    $user = new Book(null,null,null,null,null,null,null,null);
     $user->setTitle($_POST['title']);
     $user->setAuthor($_POST['author']);
     $user->setGenre($_POST['genre']);
@@ -139,4 +139,32 @@ if(isset($_POST['submit'])) {
     $user->setAvailableCopies($_POST['available_copies']);
     $bookimp = new BookController();
     $bookimp->save($user);
+}
+
+
+if(isset($_POST['submit-edit'])) {
+    $book = new Book(null,null,null,null,null,null,null,null);
+    $book->setId($_POST["id"]);
+    $book->setTitle($_POST['title']);
+    $book->setAuthor($_POST['author']);
+    $book->setGenre($_POST['genre']);
+    $book->setDescription($_POST['description']);
+    $book->setPublicationYear($_POST['publication_year']);
+    $book->setTotalCopies($_POST['total_copies']);
+    $book->setAvailableCopies($_POST['available_copies']);
+    $bookimp = new BookController();
+
+    try {
+        $bookimp->update($book);
+        $path = "../../../views/books/show.php";
+        header("Location: " . $path);
+        exit;
+    }
+
+    catch (\PDOException $e) {
+        echo "Error updating book: " . $e->getMessage();
+
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }
