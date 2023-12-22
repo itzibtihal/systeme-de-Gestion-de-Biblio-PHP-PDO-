@@ -156,7 +156,7 @@ if(isset($_POST['submit-edit'])) {
 
     try {
         $bookimp->update($book);
-        $path = "../../../views/books/show.php";
+        $path = "../../../dist/book/show.php";
         header("Location: " . $path);
         exit;
     }

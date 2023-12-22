@@ -2,102 +2,39 @@
 
 namespace App\models;
 
+use PDO;
+use PDOException;
+
 class Reservation
 {
+    private $db;
 
-    private $id;
-    private $description;
-    private $reservation_date;
-    private $return_date;
-    private $is_returned;
-    private $id_book;
-
-   
-    
-    public function __construct($id, $description, $reservation_date, $return_date, $is_returned, $id_book)
+    public function __construct($db)
     {
-        $this->id = $id;
-        $this->description = $description;
-        $this->reservation_date = $reservation_date;
-        $this->return_date = $return_date;
-        $this->is_returned = $is_returned;
-        $this->id_book = $id_book;
+        $this->db = $db;
+    }
+
+    public function createReservation($reservation)
+    {
+        try {
+            // Assuming you have a table named 'Reservation'
+            $query = "INSERT INTO reservation (book_id, user_id, description, reservation_date, return_date, is_returned)
+                      VALUES (:book_id, :user_id, :description, :reservation_date, :return_date, :is_returned)";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':book_id', $reservation['book_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':user_id', $reservation['user_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':description', $reservation['description'], PDO::PARAM_STR);
+            $stmt->bindParam(':reserv_date', $reservation['reservationation_date'], PDO::PARAM_STR);
+            $stmt->bindParam(':return_date', $reservation['return_date'], PDO::PARAM_STR);
+            $stmt->bindParam(':is_returned', $reservation['is_returned'], PDO::PARAM_INT);
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            
+            return false;
+        }
     }
 
     
-    public function getId()
-    {
-        return $this->id;
-    }
-
-   
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-   
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-   
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-   
-    public function getReservationDate()
-    {
-        return $this->reservation_date;
-    }
-
-    
-    public function setReservationDate($reservation_date)
-    {
-        $this->reservation_date = $reservation_date;
-    }
-
-    
-    public function getReturnDate()
-    {
-        return $this->return_date;
-    }
-
-   
-    public function setReturnDate($return_date)
-    {
-        $this->return_date = $return_date;
-    }
-
-   
-    public function getIsReturned()
-    {
-        return $this->is_returned;
-    }
-
-   
-    public function setIsReturned($is_returned)
-    {
-        $this->is_returned = $is_returned;
-    }
-
-    
-    public function getIdBook()
-    {
-        return $this->id_book;
-    }
-
-   
-    public function setIdBook($id_book)
-    {
-        $this->id_book = $id_book;
-    }
-
-
-
-
-
 }
