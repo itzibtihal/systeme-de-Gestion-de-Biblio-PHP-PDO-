@@ -1,17 +1,15 @@
 <?php
 
-use App\controllers\BookController;
+    require_once "../../app/controllers/reservation/ReservController.php";
 
-require_once "../../app/controllers/Reservation/ReservationController.php";
+    $id = null;
 
-$id = null;
+    if(isset($_GET["id"])){
+        $id = $_GET["id"];
+    }
 
-if (isset($_GET["id"])) {
-    $id = $_GET["id"];
-}
-
-$deletereservation = new ReservationController();
-
-$deletereservation->deleteById($id);
-
+    $reservationimp = new \App\reservation\ReservationController();
+    $reservationimp->deleteById($id);
+    header("Location: show.php");
+    exit();
 ?>
