@@ -17,7 +17,7 @@ class Reservation
     public function createReservation($reservation)
     {
         try {
-            // Assuming you have a table named 'Reservation'
+            
             $query = "INSERT INTO reservation (book_id, user_id, description, reservation_date, return_date, is_returned)
                       VALUES (:book_id, :user_id, :description, :reservation_date, :return_date, :is_returned)";
 
